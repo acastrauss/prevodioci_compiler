@@ -6,8 +6,22 @@
    i ispisati rezultat */
 int main() {
   int res;
+  int a = 0b101;
+  unsigned b = 0x4a2;
+
+  bool g = true;
+  bool bla = -4;
+
+  bool p = g < bla;
+  bool p = not(false and true);
+  
+  bool p = g && bla;
+  
+  
+
   res = abs(5); // poziv funkcije
-  printf("Apsolutna vrednost je %d", res); 
+  
+  //printf("Apsolutna vrednost je %d", res); 
 }
 
 //Funkcija koja racuna apsolutnu vrednost

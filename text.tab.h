@@ -71,7 +71,8 @@ extern int yydebug;
     AND_OP = 277,
     OR_OP = 278,
     NOT_OP = 279,
-    XOR_OP = 280
+    XOR_OP = 280,
+    ONLY_IF = 281
   };
 #endif
 

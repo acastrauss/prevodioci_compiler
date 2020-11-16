@@ -34,6 +34,9 @@
 %token  NOT_OP
 %token  XOR_OP
 
+%nonassoc ONLY_IF
+%nonassoc KW_ELSE
+
 %%
 
 program
@@ -47,8 +50,8 @@ function_list
   ;
 
 function
-  : function_init SEMICOLON
-  | function_init function_body 
+  : function_init 
+  | function_def
   ;
 
 type
@@ -57,8 +60,12 @@ type
   | KW_TYPE_BOOL
   ;
 
-function_init
-  : type ID PARENT_L parameter_list PARENT_R 
+function_init 
+  : type ID PARENT_L parameter_list PARENT_R SEMICOLON
+  ;
+
+function_def
+  : type ID PARENT_L parameter_list PARENT_R function_body
   ;
 
 function_body
@@ -92,6 +99,7 @@ variable_init
 
 variable_def
   : type ID ASSIGN_OP num_exp SEMICOLON
+  | type ID ASSIGN_OP bool_full_exp SEMICOLON
   ;
 
 
@@ -112,7 +120,7 @@ compound_statement
   ;
 
 assign_statement
-  : ID ASSIGN_OP num_exp SEMICOLON;
+  : ID ASSIGN_OP num_exp SEMICOLON
   ;
 
 num_exp
@@ -129,7 +137,6 @@ exp
 
 literal
   : INT_NUM_VALUE
-  | BOOL_VALUE
   ;
 
 function_call
@@ -144,25 +151,42 @@ argument_list
 argument
   : /* empty argument */
   | num_exp
+  | bool_full_exp
   ;
 
 if_statement
-  : if_part
+  : if_part %prec ONLY_IF
   | if_part else_part
   ;
 
 if_part
-  : KW_IF PARENT_L bool_exp PARENT_R statement
+  : KW_IF PARENT_L bool_full_exp PARENT_R statement
   ;
-
+ 
 else_part
   : KW_ELSE statement
   ;
 
 bool_exp
   : BOOL_VALUE
-  | num_exp
-  | num_exp RELATION_OP num_exp
+  | rel_exp
+  | NOT_OP PARENT_L bool_full_exp PARENT_R
+  ;
+
+bool_full_exp
+  : bool_exp
+  | bool_full_exp bool_op bool_exp
+  ;
+
+bool_op
+  : AND_OP
+  | OR_OP
+  | XOR_OP
+  ;
+
+
+rel_exp
+  : num_exp RELATION_OP num_exp
   ;
 
 return_statement
