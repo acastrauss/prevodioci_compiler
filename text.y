@@ -94,7 +94,7 @@ variable
   ;
 
 variable_init
-  : type ID SEMICOLON
+  : type id_list SEMICOLON
   ;
 
 variable_def
@@ -102,6 +102,10 @@ variable_def
   | type ID ASSIGN_OP bool_full_exp SEMICOLON
   ;
 
+id_list
+  : ID
+  | id_list COMMA ID
+  ;
 
 statement_list
   : /* there can be no statements */

@@ -15,9 +15,9 @@ int main() {
   bool p = g < bla;
   bool p = not(false and true);
   
-  bool p = g && bla;
+  //bool p = g && bla;
   
-  
+  int a, c;
 
   res = abs(5); // poziv funkcije
   
